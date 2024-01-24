@@ -1,18 +1,25 @@
-   org   07c00h
-   mov    ax, cs
-   mov   ds, ax
-   mov   es, ax
-   call   DispStr
-   jmp   $
-DispStr:
-   mov   ax, BootMessage
-   mov   bp, ax
-   mov   cx, 13
-   mov   ax, 01301h
-   mov   bx, 000ch
-   mov   dl, 0
-   int   10h
-   ret
-BootMessage:      db   "Welcome to Semix!"
+mov ah, 0x0e ; scrolling teletype BIOS routine
+
+mov bp, 0x8000
+mov sp, bp
+
+mov cx, 5
+
+push 'S'
+push 'e'
+push 'm'
+push 'i'
+push 'x'
+
+print: 
+   pop bx
+   mov al, bl
+   int 0x10
+   add cx, -1
+   cmp cx, 0
+   jne print
+
+jmp $
+
 times   510-($-$$)   db   0
 dw   0xaa55
