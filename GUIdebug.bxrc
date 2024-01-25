@@ -1,0 +1,6 @@
+
+display_library: win32, options="gui_debug"
+magic_break: enabled=1
+floppya: 1_44=boot_sect.bin , status=inserted
+boot: a
+# log: bochslog.txt

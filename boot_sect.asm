@@ -1,25 +1,19 @@
-mov ah, 0x0e ; scrolling teletype BIOS routine
+[org 0x7c00] 
+   mov bx, HELLO_MSG 
+   call print_string 
+   mov bx, GOODBYE_MSG
+   call print_string
+   
+   jmp $ 
 
-mov bp, 0x8000
-mov sp, bp
+%include "print_string.asm"
 
-mov cx, 5
+; Data
+HELLO_MSG :
+   db "Hello, World!", 0 
+GOODBYE_MSG :
+   db "Goodbye!", 0
 
-push 'S'
-push 'e'
-push 'm'
-push 'i'
-push 'x'
 
-print: 
-   pop bx
-   mov al, bl
-   int 0x10
-   add cx, -1
-   cmp cx, 0
-   jne print
-
-jmp $
-
-times   510-($-$$)   db   0
-dw   0xaa55
+times 510 -($-$$) db 0
+dw 0xaa55
